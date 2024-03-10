@@ -16,6 +16,8 @@ import com.cloud.microservices.currencyconversionservice.proxy.CurrencyExchangeP
 @RestController
 public class CurrencyConversionController {
 	
+	private RestTemplate restTemplate;
+	
 	@Autowired
 	private CurrencyExchangeProxy currencyExchangeProxy;
 	
@@ -26,7 +28,7 @@ public class CurrencyConversionController {
 		uriVariables.put("from", from);
 		uriVariables.put("to", to);
 
-		ResponseEntity<CurrencyConversion> forEntity = new RestTemplate().getForEntity("http://localhost:8000/currency-exchange/from/{from}/to/{to}",CurrencyConversion.class,uriVariables);
+		ResponseEntity<CurrencyConversion> forEntity = restTemplate.getForEntity("http://localhost:8000/currency-exchange/from/{from}/to/{to}",CurrencyConversion.class,uriVariables);
 		CurrencyConversion currencyConversion = forEntity.getBody();
 		return new CurrencyConversion(currencyConversion.getId(),from, to,currencyConversion.getConversionMultiple(),units.multiply(currencyConversion.getConversionMultiple()),units,currencyConversion.getEnvironment()+" RestTemplate");
 	}
