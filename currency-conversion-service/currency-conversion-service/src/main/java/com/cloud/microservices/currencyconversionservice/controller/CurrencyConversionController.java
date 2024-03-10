@@ -15,7 +15,8 @@ import com.cloud.microservices.currencyconversionservice.proxy.CurrencyExchangeP
 
 @RestController
 public class CurrencyConversionController {
-	
+
+	@Autowired
 	private RestTemplate restTemplate;
 	
 	@Autowired
